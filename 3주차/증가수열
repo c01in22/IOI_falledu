@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+
+ll n;
+multimap <ll, ll> a,b,c;
+multimap <ll, ll> bb, cc;
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cin >> n;
+    for(ll i = 0; i < n; i++){
+        ll x; cin >> x; a.insert({x, i});
+    }
+    for(ll i = 0; i < n; i++) {
+        ll x; cin >> x; b.insert({x, i});
+    }
+    for(ll i = 0; i < n; i++){
+        ll x; cin >> x; c.insert({x, i});
+    }
+    ll cur = 0;
+    for(auto i = a.begin(); i != a.end(); i++){
+        /*
+        for(auto j = b.begin(); j != b.end(); j++){
+            cout << j->first << ' ';
+        }
+        cout << '\n';
+        */
+        map <ll, ll>::iterator k = b.upper_bound(i->first);
+        if(k != b.end()){
+            bb.insert(*k);
+            b.erase(k);
+        }
+        else break;
+    }
+    if(bb.empty()){
+        cout << 0;
+        return 0;
+    }
+    cur = 0;
+    for(auto i = bb.begin(); i != bb.end(); i++){
+        map <ll, ll>::iterator k = c.upper_bound(i->first);
+        if(k != c.end()){
+            cc.insert(*k);
+            c.erase(k);
+        }
+        else break;
+    }
+    cout << cc.size() << '\n';
+    return 0;
+}
