@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+typedef long long ll;
+using namespace std;
+ll n, h, cnt, cur;
+string s;
+stack <char> st;
+int main(){
+    cin >> n >> h >> s;
+    for(ll i = 0; i < s.size(); i++){
+        if(s[i] == '('){
+            while(i < s.size() && s[i] == '('){
+                cur++, i++;
+                if(cur <= h) st.push('(');
+                else{
+                    if(st.top() == '(') st.pop();
+                    cur-=2, cnt++;
+                }
+            }
+            i--;
+        }
+        else{
+            if(st.empty()) st.push('('), cnt++, cur=1;
+            else st.pop(), cur--;
+        }
+    }
+    cout << cnt;
+    return 0;
+}
+
